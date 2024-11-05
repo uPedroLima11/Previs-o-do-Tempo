@@ -1,13 +1,17 @@
 "use client";
 import Navbar from "@/components/Navbar";
 import axios from "axios";
-import { format, parseISO } from "date-fns";
+import { fromUnixTime, parseISO } from "date-fns";
 import { useQuery } from "react-query";
 import { pt } from 'date-fns/locale';
 import Container from "@/components/Container";
 import { convertKelvinParaCelsius } from "@/utils/converterKelvinParaCelsius";
 import ClimaIcon from "@/components/ClimaIcon";
 import { DiaOuNoiteIcon } from "@/utils/DiaOuNoiteIcon";
+import PrevisaoClimaDetalhe from "@/components/PrevisaoClimaDetalhe";
+import { metrosParaKm } from "@/utils/metrosParaKm";
+import { format } from 'date-fns-tz';
+import { convertVelocidadeVento } from "@/utils/converterVelocidadeVento";
 
 interface Coordenadas {
   lat: number;
@@ -83,12 +87,13 @@ function capitalizarPrimeiraLetra(texto: string) {
 
 export default function Home() {
   const { isLoading, error, data } = useQuery<RespostaAPI>('repoData', async () => {
-    const { data } = await axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=pune&appid=${process.env.NEXT_PUBLIC_CLIMA_KEY}&cnt=56`);
+    const { data } = await axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=pune&appid=1d33c60514cdd37f80fbe52321b49773&cnt=56`);
 
     return data;
   });
 
   const firstData = data?.list[0];
+  
 
   if (isLoading) return (
     <div className="flex items-center min-h-screen justify-center">
@@ -155,13 +160,35 @@ export default function Home() {
               <ClimaIcon
                 iconName={DiaOuNoiteIcon(firstData?.weather[0].icon ?? "", firstData?.dt_txt ?? "")} />
             </Container>
-            <Container className="overflow-x-auto bg-yellow-300/80 px-6 gap-4 justify-between"></Container>
-            
+            <Container className="overflow-x-auto bg-yellow-300/80 px-6 gap-4 justify-between">
+              <PrevisaoClimaDetalhe
+                visibilidade={metrosParaKm(firstData?.visibility ?? 10000)}
+                pressaoAr={`${firstData?.main.pressure} hPa`}
+                umidade={`${firstData?.main.humidity}%`}
+                nascerSol={format(
+                  fromUnixTime(data?.city.sunrise ?? 1730768771),
+                  "HH:mm",
+                  { timeZone: 'America/Sao_Paulo' }
+                )}
+                porSol={format(
+                  fromUnixTime(data?.city.sunset ?? 1730809808),
+                  "HH:mm",
+                  { timeZone: 'America/Sao_Paulo' }
+                )}
+                velocidadeVento={convertVelocidadeVento(firstData?.wind.speed ?? 1.64)}
+              />
+
+            </Container>
+
           </div>
         </section>
 
         <section className="flex w-full flex-col gap-4">
           <p className="text-2xl"> Previsão Para (7 dias)</p>
+          
+          
+          
+          
         </section>
       </main>
     </div>
