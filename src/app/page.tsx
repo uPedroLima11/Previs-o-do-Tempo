@@ -11,77 +11,69 @@ import { convertKelvinParaCelsius } from "@/utils/converterKelvinParaCelsius";
 
 // https://api.openweathermap.org/data/2.5/forecast?q=pune&appid=1d33c60514cdd37f80fbe52321b49773&cnt=56
 
-// Definição da interface para as coordenadas da cidade
 interface Coordenadas {
-  lat: number;  // Latitude
-  lon: number;  // Longitude
+  lat: number;
+  lon: number;
 }
 
-// Definição da interface para as informações da cidade
 interface Cidade {
-  id: number;            // ID da cidade
-  name: string;         // Nome da cidade
-  coord: Coordenadas;   // Coordenadas da cidade
-  country: string;      // Código do país
-  population: number;   // População da cidade
-  timezone: number;     // Fuso horário
-  sunrise: number;      // Horário do nascer do sol (timestamp)
-  sunset: number;       // Horário do pôr do sol (timestamp)
+  id: number;
+  name: string;
+  coord: Coordenadas;
+  country: string;
+  population: number;
+  timezone: number;
+  sunrise: number;
+  sunset: number;
 }
 
-// Definição da interface para a descrição do tempo
 interface Weather {
-  id: number;          // ID da condição climática
-  main: string;       // Condição climática principal (ex: "Clear", "Clouds")
-  description: string; // Descrição do clima (ex: "clear sky", "few clouds")
-  icon: string;       // Ícone correspondente ao clima
+  id: number;
+  main: string;
+  description: string;
+  icon: string;
 }
 
-// Definição da interface para as condições meteorológicas principais
 interface Main {
-  temp: number;       // Temperatura
-  feels_like: number; // Sensação térmica
-  temp_min: number;   // Temperatura mínima
-  temp_max: number;   // Temperatura máxima
-  pressure: number;   // Pressão atmosférica
-  sea_level: number;  // Pressão ao nível do mar
-  grnd_level: number; // Pressão ao nível do solo
-  humidity: number;   // Umidade
-  temp_kf: number;    // Temperatura ajustada (se necessário)
+  temp: number;
+  feels_like: number;
+  temp_min: number;
+  temp_max: number;
+  pressure: number;
+  sea_level: number;
+  grnd_level: number;
+  humidity: number;
+  temp_kf: number;
 }
 
-// Definição da interface para as condições de vento
 interface Wind {
-  speed: number; // Velocidade do vento
-  deg: number;   // Direção do vento
-  gust: number;  // Rajada de vento
+  speed: number;
+  deg: number;
+  gust: number;
 }
 
-// Definição da interface para as nuvens
 interface Clouds {
-  all: number; // Porcentagem de cobertura de nuvens
+  all: number;
 }
 
-// Definição da interface para cada entrada da previsão
 interface Previsao {
-  dt: number;      // Data em formato timestamp
-  main: Main;      // Informações principais do tempo
-  weather: Weather[]; // Array de condições climáticas
-  clouds: Clouds;   // Informações sobre nuvens
-  wind: Wind;       // Informações sobre vento
-  visibility: number; // Visibilidade
-  pop: number;      // Probabilidade de precipitação
-  sys: { pod: string }; // Parte do dia ("d" para dia, "n" para noite)
-  dt_txt: string;   // Data e hora em formato legível
+  dt: number;
+  main: Main;
+  weather: Weather[];
+  clouds: Clouds;
+  wind: Wind;
+  visibility: number;
+  pop: number;
+  sys: { pod: string };
+  dt_txt: string;
 }
 
-// Definição da interface para a resposta completa
 interface RespostaAPI {
-  cod: string;           // Código da resposta
-  message: number;      // Mensagem (geralmente 0 se bem-sucedido)
-  cnt: number;          // Contagem de entradas na previsão
-  list: Previsao[];     // Lista de previsões
-  city: Cidade;         // Informações da cidade
+  cod: string;
+  message: number;
+  cnt: number;
+  list: Previsao[];
+  city: Cidade;
 }
 
 
