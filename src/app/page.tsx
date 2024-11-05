@@ -110,8 +110,8 @@ export default function Home() {
     <div className="flex flex-col gap-4 bg-gray-100 min-h-screen">
       <Navbar />
       <main className="px-3 max-w-7xl mx-auto flex flex-col gap-9 w-full pb-10 pt-4">
-        <section>
-          <div>
+        <section className="space-y-4">
+          <div className="space-y-2">
             <h2 className="flex gap-1 text-2xl items-end">
               <p className="capitalize">
                 {firstData?.dt_txt &&
@@ -126,19 +126,37 @@ export default function Home() {
             <Container className="gap-10 px-6 items-center">
               <div className=" flex flex-col px-4">
                 <span className="text-5xl">
-                {convertKelvinParaCelsius(firstData?.main.temp ?? 295.51)}°C
+                  {convertKelvinParaCelsius(firstData?.main.temp ?? 295.51)}°C
                 </span>
                 <p className="text-xs space-x-1 whitespace-nowrap">
                   <span> Sensação Térmica</span>
                   <span>
-                    {convertKelvinParaCelsius(firstData?.main.feels_like ?? 0)}°C
+                    {convertKelvinParaCelsius(firstData?.main.feels_like ?? 0,)}°C
                   </span>
-
-                
+                </p>
+                <p className="text-xs space-x-2">
+                  <span>
+                    {convertKelvinParaCelsius(firstData?.main.temp_min ?? 0)}°↓
+                  </span>
+                  <span>
+                    {convertKelvinParaCelsius(firstData?.main.temp_max ?? 0)}°↑
+                  </span>
                 </p>
               </div>
 
+              <div className="flex gap-10 sm:gap-16 overflow-x-auto w-full justify-between pr-3">
+                {data?.list.map((d, i) => (
 
+                  <div key={i}
+                    className="flex flex-col justify between gap-2 items-center text-xs font-semibold"
+                  >
+                    <p className="whitespace-nowrap">{format(parseISO(d.dt_txt), "h:mm a", { locale: pt })}</p>
+                    
+                    <p>{convertKelvinParaCelsius(d?.main.temp ?? 0)}°</p>
+                  </div>
+                  
+                ))}
+              </div>
             </Container>
             <div></div>
 
