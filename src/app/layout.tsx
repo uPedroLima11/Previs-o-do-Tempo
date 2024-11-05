@@ -1,6 +1,9 @@
+
+'use client';
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -13,23 +16,28 @@ const geistMono = localFont({
   weight: "100 900",
 });
 
-export const metadata: Metadata = {
-  title: "Previsão do Tempo",
-  description: "Site de Previsão do tempo criado por Pedro Mendes Lima",
-};
+//export const metadata: Metadata = {
+  //title: "Previsão do Tempo",
+  //description: "Site de Previsão do tempo criado por Pedro Mendes Lima",
+//};
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  
+  const queryClient = new QueryClient()
+
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
+      <QueryClientProvider client={queryClient}>
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        >
+          {children}
+        </body>
+        </QueryClientProvider>
     </html>
   );
 }
