@@ -21,12 +21,12 @@ export default function PrevisaoTempoDetalhe(props: PrevisaoTempoDetalheProps) {
         weatherIcon = "02d",
         date = "19.09",
         day = "Terça-Feira",
-        temp,
-        feels_Like,
-        temp_min,
-        temp_max,
-        description
-      } = props;
+        temp = 0,
+        feels_Like = 0,
+        temp_min = 0,
+        temp_max = 0,
+        description = "Sem descrição"
+    } = props;
 
     return (
         <Container className='gap-4'>
@@ -48,7 +48,6 @@ export default function PrevisaoTempoDetalhe(props: PrevisaoTempoDetalheProps) {
             </section>
 
             <section className='overflow-x-auto flex justify-between gap-4 px-4 w-full pr-10'>
-            <PrevisaoTempoDetalhe {...props} />
             </section>
         </Container>
     )
