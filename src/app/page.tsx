@@ -17,6 +17,8 @@ import PrevisaoTempoDetalhe from "@/components/PrevisaoTempoDetalhe";
 import { metrosParaKm } from "@/utils/metrosParaKm";
 import { toZonedTime } from "date-fns-tz";
 import { ptBR } from "date-fns/locale";
+import { addSeconds } from "date-fns";
+
 
 interface WeatherDetail {
   dt: number;

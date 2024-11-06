@@ -63,7 +63,7 @@ export default function PrevisaoTempoDetalhe(props: PrevisaoTempoDetalheProps) {
             <section className='flex gap-4 items-center px-4'>
                 <div className='flex flex-col gap-1 items-center '>
                     <ClimaIcon iconName={weatherIcon} />
-                    <p className='text-black capitalize'>{date}</p>
+                    <p className='text-black capitalize'>{date} </p>
                     <p className='text-sm text-black capitalize'>{day}</p>
                 </div>
                 <div className='flex flex-col px-4'>
