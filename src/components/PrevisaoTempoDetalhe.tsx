@@ -1,7 +1,7 @@
 import React from 'react'
 import Container from './Container'
 import ClimaIcon from './ClimaIcon'
-import { PrevisaoClimaDetalheProps } from './PrevisaoClimaDetalhe';
+import PrevisaoClimaDetalhe, { PrevisaoClimaDetalheProps } from './PrevisaoClimaDetalhe';
 import { convertKelvinParaCelsius } from '@/utils/converterKelvinParaCelsius';
 
 export interface PrevisaoTempoDetalheProps extends PrevisaoClimaDetalheProps {
@@ -40,15 +40,16 @@ export default function PrevisaoTempoDetalhe(props: PrevisaoTempoDetalheProps) {
                 <div className='flex flex-col px-4'>
                     <span className='text-5xl'>{convertKelvinParaCelsius(temp ?? 0)}°</span>
                     <p className='text-xs space-x-1 whitespace-nowrap'>
-                        <span>Feels Like</span>
+                        <span>Sensação De</span>
                         <span>{convertKelvinParaCelsius(feels_Like ?? 0)}°</span>
                     </p>
                     <p className='capitalize'>{description}</p>
                 </div>
             </section>
 
-            <section className='overflow-x-auto flex justify-between gap-4 px-4 w-full pr-10'>
-            </section>
-        </Container>
-    )
+            <section className=" overflow-x-auto flex justify-between gap-4 px-4  w-full pr-10">
+        <PrevisaoClimaDetalhe {...props} />
+      </section>
+    </Container>
+  );
 }

@@ -5,17 +5,19 @@ import { IoSearch } from "react-icons/io5";
 type Props = {
     className?: string;
     value: string;
-    onChange: React.ChangeEventHandler<HTMLInputElement> |
-    undefined;
-    onSubmit: React.FormEventHandler<HTMLFormElement> |
-    undefined;
+    onChange: React.ChangeEventHandler<HTMLInputElement> | undefined;
+    onSubmit: React.FormEventHandler<HTMLFormElement> | undefined;
 };
 
 export default function Pesquisa(props: Props) {
     return (
-        <form className={cn("flex relative items-center justify-center h-10",
-            props.className)}>
-                    
+        <form
+            onSubmit={props.onSubmit}
+
+            className={cn(
+                "flex relative items-center justify-center h-10",
+                props.className)}>
+
             <input type="text"
                 value={props.value}
                 onChange={props.onChange}
