@@ -13,6 +13,8 @@ import { metrosParaKm } from "@/utils/metrosParaKm";
 import { format } from 'date-fns-tz';
 import { convertVelocidadeVento } from "@/utils/converterVelocidadeVento";
 import PrevisaoTempoDetalhe from "@/components/PrevisaoTempoDetalhe";
+import { placeAtom } from "./atom";
+import { useAtom } from "jotai";
 
 
 interface Coordenadas {
@@ -88,14 +90,21 @@ function capitalizarPrimeiraLetra(texto: string) {
 }
 
 export default function Home() {
-  const { isLoading, error, data } = useQuery<RespostaAPI>('repoData', async () => {
-    const response = await axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=pune&appid=${process.env.NEXT_PUBLIC_CLIMA_KEY}&cnt=56`);
-    return response.data;
-  });
+
+  const { isLoading, error, data } = useQuery<RespostaAPI>(
+    "repoData", 
+    async () => {
+        const { data } = await axios.get(
+            `https://api.openweathermap.org/data/2.5/forecast?q=pune&appid=${process.env.NEXT_PUBLIC_CLIMA_KEY}&cnt=56`
+        );
+        return data;
+    }
+);
 
 
 
   const firstData = data?.list[0];
+
   console.log("data", data)
 
   const uniqueDates = [
