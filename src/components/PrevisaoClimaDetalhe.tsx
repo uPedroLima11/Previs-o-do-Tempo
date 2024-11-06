@@ -19,7 +19,7 @@ export default function PrevisaoClimaDetalhe(props: PrevisaoClimaDetalheProps) {
     umidade = "61%",
     velocidadeVento = "7 km/h",
     pressaoAr = "1012 hPa",
-    nascerSol = "6.20",
+    nascerSol = "6:20",
     porSol = "18:48"
   } = props;
 

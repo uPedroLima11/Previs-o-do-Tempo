@@ -15,8 +15,8 @@ import { convertVelocidadeVento } from "@/utils/converterVelocidadeVento";
 import { DiaOuNoiteIcon } from "@/utils/DiaOuNoiteIcon";
 import PrevisaoTempoDetalhe from "@/components/PrevisaoTempoDetalhe";
 import { metrosParaKm } from "@/utils/metrosParaKm";
-
-
+import { toZonedTime } from "date-fns-tz";
+import { ptBR } from "date-fns/locale";
 
 interface WeatherDetail {
   dt: number;
@@ -93,7 +93,6 @@ export default function Home() {
 
   const firstData = data?.list[0];
 
-
   console.log("data", data);
 
   const uniqueDates = [
@@ -115,7 +114,7 @@ export default function Home() {
   if (isLoading)
     return (
       <div className="flex items-center min-h-screen justify-center">
-        <p className="animate-bounce">Loading...</p>
+        <p className="animate-bounce">Carregando...</p>
       </div>
     );
   if (error)
@@ -135,10 +134,10 @@ export default function Home() {
           <>
             <section className="space-y-4 ">
               <div className="space-y-2">
-                <h2 className="flex gap-1 text-2xl  items-end ">
-                  <p>{format(parseISO(firstData?.dt_txt ?? ""), "EEEE")}</p>
+                <h2 className="flex gap-1 text-2xl  items-end capitalize ">
+                  <p>{format(parseISO(firstData?.dt_txt ?? ""), "EEEE", { locale: ptBR })}</p>
                   <p className="text-lg">
-                    ({format(parseISO(firstData?.dt_txt ?? ""), "dd.MM.yyyy")})
+                    ({format(parseISO(firstData?.dt_txt ?? ""), "dd.MM.yyyy", { locale: ptBR })})
                   </p>
                 </h2>
                 <Container className=" gap-10 px-6 items-center">
@@ -147,23 +146,18 @@ export default function Home() {
                       {convertKelvinParaCelsius(firstData?.main.temp ?? 296.37)}°
                     </span>
                     <p className="text-xs space-x-1 whitespace-nowrap">
-                      <span> Feels like</span>
+                      <span> Sensação térmica</span>
                       <span>
-                        {convertKelvinParaCelsius(
-                          firstData?.main.feels_like ?? 0
-                        )}
-                        °
+                        {convertKelvinParaCelsius(firstData?.main.feels_like ?? 0)}°
                       </span>
                     </p>
                     <p className="text-xs space-x-2">
                       <span>
-                        {convertKelvinParaCelsius(firstData?.main.temp_min ?? 0)}
-                        °↓{" "}
+                        {convertKelvinParaCelsius(firstData?.main.temp_min ?? 0)}°↓{" "}
                       </span>
                       <span>
                         {" "}
-                        {convertKelvinParaCelsius(firstData?.main.temp_max ?? 0)}
-                        °↑
+                        {convertKelvinParaCelsius(firstData?.main.temp_max ?? 0)}°↑
                       </span>
                     </p>
                   </div>
@@ -175,14 +169,11 @@ export default function Home() {
                         className="flex flex-col justify-between gap-2 items-center text-xs font-semibold "
                       >
                         <p className="whitespace-nowrap">
-                          {format(parseISO(d.dt_txt), "h:mm a")}
+                          {format(parseISO(d.dt_txt), "h:mm a", { locale: ptBR })}
                         </p>
 
                         <ClimaIcon
-                          iconName={DiaOuNoiteIcon(
-                            d.weather[0].icon,
-                            d.dt_txt
-                          )}
+                          iconName={DiaOuNoiteIcon(d.weather[0].icon, d.dt_txt)}
                         />
                         <p>{convertKelvinParaCelsius(d?.main.temp ?? 0)}°</p>
                       </div>
@@ -204,13 +195,11 @@ export default function Home() {
                 </Container>
                 <Container className="bg-yellow-300/80  px-6 gap-4 justify-between overflow-x-auto">
                   <PrevisaoClimaDetalhe
-                    visibilidade={metrosParaKm(
-                      firstData?.visibility ?? 10000
-                    )}
+                    visibilidade={metrosParaKm(firstData?.visibility ?? 10000)}
                     pressaoAr={`${firstData?.main.pressure} hPa`}
                     umidade={`${firstData?.main.humidity}%`}
-                    nascerSol={format(data?.city.sunrise ?? 1702949452, "H:mm")}
-                    porSol={format(data?.city.sunset ?? 1702517657, "H:mm")}
+                    nascerSol={format(toZonedTime(data?.city.sunrise ?? 1730855200, 'America/Sao_Paulo'), "H:mm")}
+                    porSol={format(toZonedTime(data?.city.sunset ?? 1730896186, 'America/Sao_Paulo'), "H:mm")}
                     velocidadeVento={convertVelocidadeVento(firstData?.wind.speed ?? 1.64)}
                   />
                 </Container>
@@ -218,26 +207,26 @@ export default function Home() {
             </section>
 
             <section className="flex w-full flex-col gap-4  ">
-              <p className="text-2xl">Forcast (7 days)</p>
+              <p className="text-2xl">Previsão para os próximos 7 dias</p>
               {firstDataForEachDate.map((d, i) => (
                 <PrevisaoTempoDetalhe
                   key={i}
                   description={d?.weather[0].description ?? ""}
                   weatherIcon={d?.weather[0].icon ?? "01d"}
-                  date={d ? format(parseISO(d.dt_txt), "dd.MM") : ""}
-                  day={d ? format(parseISO(d.dt_txt), "dd.MM") : "EEEE"}
+                  date={d ? format(parseISO(d.dt_txt), "dd.MM", { locale: ptBR }) : ""}
+                  day={d ? format(parseISO(d.dt_txt), "dd.MM",{ locale: ptBR }) : "EEEE"}
                   feels_Like={d?.main.feels_like ?? 0}
                   temp={d?.main.temp ?? 0}
                   temp_max={d?.main.temp_max ?? 0}
                   temp_min={d?.main.temp_min ?? 0}
                   pressaoAr={`${d?.main.pressure} hPa `}
                   umidade={`${d?.main.humidity}% `}
-                  nascerSol={format(
-                    fromUnixTime(data?.city.sunrise ?? 1702517657),
+                  porSol={format(
+                    fromUnixTime(data?.city.sunset ?? 1730896186),
                     "H:mm"
                   )}
-                  porSol={format(
-                    fromUnixTime(data?.city.sunset ?? 1702517657),
+                  nascerSol={format(
+                    fromUnixTime(data?.city.sunrise ?? 1730855200),
                     "H:mm"
                   )}
                   visibilidade={`${metrosParaKm(d?.visibility ?? 10000)} `}
