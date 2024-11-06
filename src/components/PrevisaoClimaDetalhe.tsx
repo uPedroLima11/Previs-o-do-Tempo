@@ -68,8 +68,8 @@ export interface SingleClimaDetalheProps {
 function SingleClimaDetalhe(props: SingleClimaDetalheProps) {
   return (
     <div className='flex flex-col justify-between gap-2 items-center text-xs font-semibold text-black/80'>
-      <p className='whitespace-nowrap'>{props.informacao}</p>
-      <div className='text-3xl'>{props.icon}</div>
+      <p className='whitespace-nowrap text-black'>{props.informacao}</p>
+      <div className='text-3xl text-black'>{props.icon}</div>
       <p>{props.value}</p>
     </div>
   );

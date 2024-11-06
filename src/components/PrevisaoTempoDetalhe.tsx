@@ -63,20 +63,20 @@ export default function PrevisaoTempoDetalhe(props: PrevisaoTempoDetalheProps) {
             <section className='flex gap-4 items-center px-4'>
                 <div className='flex flex-col gap-1 items-center '>
                     <ClimaIcon iconName={weatherIcon} />
-                    <p>{date}</p>
-                    <p className='text-sm'>{day}</p>
+                    <p className='text-black capitalize'>{date}</p>
+                    <p className='text-sm text-black capitalize'>{day}</p>
                 </div>
                 <div className='flex flex-col px-4'>
-                    <span className='text-5xl'>{convertKelvinParaCelsius(temp ?? 0)}°</span>
-                    <p className='text-xs space-x-1 whitespace-nowrap'>
-                        <span>Sensação De</span>
-                        <span>{convertKelvinParaCelsius(feels_Like ?? 0)}°</span>
+                    <span className='text-5xl text-black capitalize'>{convertKelvinParaCelsius(temp ?? 0)}°</span>
+                    <p className='text-xs space-x-1 whitespace-nowrap capitalize text-black'>
+                        <span className='text-black capitalize'>Sensação De</span>
+                        <span className='text-black capitalize'>{convertKelvinParaCelsius(feels_Like ?? 0)}°</span>
                     </p>
-                    <p className='capitalize'>{descricaoEmPortugues[description] || description}</p>
+                    <p className='capitalize text-black'>{descricaoEmPortugues[description] || description}</p>
                 </div>
             </section>
 
-            <section className=" overflow-x-auto flex justify-between gap-4 px-4  w-full pr-10">
+            <section className="capitalize text-black overflow-x-auto flex justify-between gap-4 px-4  w-full pr-10">
                 <PrevisaoClimaDetalhe {...props} />
             </section>
         </Container>

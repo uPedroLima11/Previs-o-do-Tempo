@@ -130,7 +130,7 @@ export default function Home() {
   if (isLoading)
     return (
       <div className="flex items-center min-h-screen justify-center">
-        <p className="animate-bounce">Carregando...</p>
+        <p className="animate-bounce text-black">Carregando...</p>
       </div>
     );
   if (error)
@@ -150,57 +150,57 @@ export default function Home() {
           <>
             <section className="space-y-4 ">
               <div className="space-y-2">
-                <h2 className="flex gap-1 text-2xl  items-end capitalize ">
-                  <p>{format(parseISO(firstData?.dt_txt ?? ""), "EEEE", { locale: ptBR })}</p>
-                  <p className="text-lg">
+                <h2 className="text-black flex gap-1 text-2xl  items-end capitalize ">
+                  <p className="text-black">{format(parseISO(firstData?.dt_txt ?? ""), "EEEE", { locale: ptBR })}</p>
+                  <p className="text-lg text-black">
                     ({format(parseISO(firstData?.dt_txt ?? ""), "dd.MM.yyyy", { locale: ptBR })})
                   </p>
                 </h2>
                 <Container className=" gap-10 px-6 items-center">
                   <div className=" flex flex-col px-4 ">
-                    <span className="text-5xl">
+                    <span className="text-5xl text-black">
                       {convertKelvinParaCelsius(firstData?.main.temp ?? 296.37)}°
                     </span>
-                    <p className="text-xs space-x-1 whitespace-nowrap">
-                      <span> Sensação térmica</span>
-                      <span>
+                    <p className="text-black text-xs space-x-1 whitespace-nowrap">
+                      <span className="text-black"> Sensação térmica</span>
+                      <span className="text-black">
                         {convertKelvinParaCelsius(firstData?.main.feels_like ?? 0)}°
                       </span>
                     </p>
                     <p className="text-xs space-x-2">
-                      <span>
+                      <span className="text-black">
                         {convertKelvinParaCelsius(firstData?.main.temp_min ?? 0)}°↓{" "}
                       </span>
-                      <span>
+                      <span className="text-black">
                         {" "}
                         {convertKelvinParaCelsius(firstData?.main.temp_max ?? 0)}°↑
                       </span>
                     </p>
                   </div>
 
-                  <div className="flex gap-10 sm:gap-16 overflow-x-auto w-full justify-between pr-3">
+                  <div className="flex gap-10 sm:gap-16 overflow-x-auto w-full justify-between pr-3 ">
                     {data?.list.map((d, i) => (
                       <div
                         key={i}
                         className="flex flex-col justify-between gap-2 items-center text-xs font-semibold "
                       >
-                        <p className="whitespace-nowrap">
+                        <p className="text-black whitespace-nowrap">
                           {format(parseISO(d.dt_txt), "h:mm a", { locale: ptBR })}
                         </p>
 
                         <ClimaIcon
                           iconName={DiaOuNoiteIcon(d.weather[0].icon, d.dt_txt)}
                         />
-                        <p>{convertKelvinParaCelsius(d?.main.temp ?? 0)}°</p>
+                        <p className="text-black">{convertKelvinParaCelsius(d?.main.temp ?? 0)}°</p>
                       </div>
                     ))}
                   </div>
                 </Container>
               </div>
               <div className=" flex gap-4">
-                <Container className="w-fit justify-center flex-col px-4 items-center">
-                  <p className="capitalize text-center">
-                  {climaEmPortugues[firstData?.weather[0]?.description ?? "default"]}
+                <Container className="w-fit justify-center flex-col px-4 items-center text-black">
+                  <p className="capitalize text-center text-black">
+                    {climaEmPortugues[firstData?.weather[0]?.description ?? "default"]}
                   </p>
                   <ClimaIcon
                     iconName={DiaOuNoiteIcon(
@@ -223,14 +223,14 @@ export default function Home() {
             </section>
 
             <section className="flex w-full flex-col gap-4  ">
-              <p className="text-2xl">Previsão para os próximos 7 dias</p>
+              <p className="text-2xl text-black">Previsão para os próximos 7 dias</p>
               {firstDataForEachDate.map((d, i) => (
                 <PrevisaoTempoDetalhe
                   key={i}
                   description={d?.weather[0].description ?? ""}
                   weatherIcon={d?.weather[0].icon ?? "01d"}
                   date={d ? format(parseISO(d.dt_txt), "dd.MM", { locale: ptBR }) : ""}
-                  day={d ? format(parseISO(d.dt_txt), "dd.MM", { locale: ptBR }) : "EEEE"}
+                  day={d ? format(parseISO(d.dt_txt), "EEEE", { locale: ptBR }) : ""}
                   feels_Like={d?.main.feels_like ?? 0}
                   temp={d?.main.temp ?? 0}
                   temp_max={d?.main.temp_max ?? 0}
@@ -269,7 +269,7 @@ function ClimaEsqueleto() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {[1, 2, 3, 4].map((index) => (
             <div key={index} className="flex flex-col items-center space-y-2">
-              <div className="h-6 w-16 bg-gray-300 rounded"></div>
+              <div className="h-6 w-16 bg-gray-300 rounded "></div>
               <div className="h-6 w-6 bg-gray-300 rounded-full"></div>
               <div className="h-6 w-16 bg-gray-300 rounded"></div>
             </div>
