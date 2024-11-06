@@ -73,6 +73,22 @@ interface WeatherData {
   };
 }
 
+
+const climaEmPortugues: { [key: string]: string } = {
+  "clear sky": "Céu limpo",
+  "few clouds": "Poucas nuvens",
+  "scattered clouds": "Nuvens dispersas",
+  "broken clouds": "Nuvens quebradas",
+  "shower rain": "Chuva",
+  "rain": "Chuva",
+  "thunderstorm": "Trovoada",
+  "snow": "Neve",
+  "mist": "Névoa",
+  "overcast clouds": "Nuvens densas",
+};
+
+
+
 export default function Home() {
   const [place, setPlace] = useAtom(placeAtom);
   const [loadingCity] = useAtom(loadingCityAtom);
@@ -182,9 +198,9 @@ export default function Home() {
                 </Container>
               </div>
               <div className=" flex gap-4">
-                <Container className="w-fit  justify-center flex-col px-4 items-center ">
-                  <p className=" capitalize text-center">
-                    {firstData?.weather[0].description}{" "}
+                <Container className="w-fit justify-center flex-col px-4 items-center">
+                  <p className="capitalize text-center">
+                  {climaEmPortugues[firstData?.weather[0]?.description ?? "default"]}
                   </p>
                   <ClimaIcon
                     iconName={DiaOuNoiteIcon(
@@ -214,7 +230,7 @@ export default function Home() {
                   description={d?.weather[0].description ?? ""}
                   weatherIcon={d?.weather[0].icon ?? "01d"}
                   date={d ? format(parseISO(d.dt_txt), "dd.MM", { locale: ptBR }) : ""}
-                  day={d ? format(parseISO(d.dt_txt), "dd.MM",{ locale: ptBR }) : "EEEE"}
+                  day={d ? format(parseISO(d.dt_txt), "dd.MM", { locale: ptBR }) : "EEEE"}
                   feels_Like={d?.main.feels_like ?? 0}
                   temp={d?.main.temp ?? 0}
                   temp_max={d?.main.temp_max ?? 0}

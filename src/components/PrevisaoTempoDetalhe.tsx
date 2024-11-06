@@ -4,6 +4,35 @@ import ClimaIcon from './ClimaIcon'
 import PrevisaoClimaDetalhe, { PrevisaoClimaDetalheProps } from './PrevisaoClimaDetalhe';
 import { convertKelvinParaCelsius } from '@/utils/converterKelvinParaCelsius';
 
+
+
+const descricaoEmPortugues: { [key: string]: string } = {
+    "clear sky": "Céu limpo",
+    "few clouds": "Poucas nuvens",
+    "scattered clouds": "Nuvens dispersas",
+    "broken clouds": "Nuvens quebradas",
+    "shower rain": "Chuva leve",
+    "rain": "Chuva",
+    "thunderstorm": "Trovoada",
+    "snow": "Neve",
+    "mist": "Neblina",
+    "overcast clouds": "Nublado",
+    "light rain": "Chuva leve",
+    "light snow": "Chuva",
+    "moderate rain": "Chuva moderada",
+    "heavy intensity rain": "Chuva intensa",
+    "light intensity shower rain": "Chuva leve",
+    "drizzle": "Garôa",
+    "thunderstorm with light rain": "Trovoada com chuva leve",
+    "thunderstorm with rain": "Trovoada com chuva",
+    "thunderstorm with heavy rain": "Trovoada com chuva intensa",
+    "snow shower": "Aguaceiro de neve",
+    "fog": "Névoa",
+    "haze": "Nebulosidade",
+    "sleet": "Granizo",
+};
+
+
 export interface PrevisaoTempoDetalheProps extends PrevisaoClimaDetalheProps {
     weatherIcon: string;
     date: string;
@@ -43,13 +72,13 @@ export default function PrevisaoTempoDetalhe(props: PrevisaoTempoDetalheProps) {
                         <span>Sensação De</span>
                         <span>{convertKelvinParaCelsius(feels_Like ?? 0)}°</span>
                     </p>
-                    <p className='capitalize'>{description}</p>
+                    <p className='capitalize'>{descricaoEmPortugues[description] || description}</p>
                 </div>
             </section>
 
             <section className=" overflow-x-auto flex justify-between gap-4 px-4  w-full pr-10">
-        <PrevisaoClimaDetalhe {...props} />
-      </section>
-    </Container>
-  );
+                <PrevisaoClimaDetalhe {...props} />
+            </section>
+        </Container>
+    );
 }
